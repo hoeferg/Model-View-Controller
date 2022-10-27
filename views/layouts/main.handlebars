@@ -1,12 +1,30 @@
+{{!-- WHEN I click on the homepage option
+THEN I am taken to the homepage
+WHEN I click on any other links in the navigation
+THEN I am prompted to either sign up or sign in --}}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tech Blog</title>
+    <link rel="stylesheet" href="/css/jass.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
-    
+    <div class="flex-column justify-space-around">
+        <header class="display-flex justify-space-between align-right p-2">
+            <h1>
+                Tech Blog
+            </h1>
+        </header>
+        <main class="container container-fluid mt-5">
+            {{{body}}}
+        </main>
+    </div>
 </body>
+
 </html>

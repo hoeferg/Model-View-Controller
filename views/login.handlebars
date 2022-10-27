@@ -1,0 +1,74 @@
+{{!-- WHEN I choose to sign up
+THEN I am prompted to create a username and password
+WHEN I click on the sign-up button --}}
+<div class="post-container">
+    <div class="card-header col-md-12 text-center">
+        <h2>
+            Newest Post
+        </h2>
+    </div>
+    {{#each post as |post|}}
+    <div class="post col-md-4">
+        <p>
+            {{post.id}}.
+            {{post.post_title}}
+        </p>
+    </div>
+    <div class="col-md-5">
+        <p>
+            User:
+            {{post.user_name}}
+        </p>
+    </div>
+    {{!-- <div class="col-md-3">
+        {{#if dish.has_nuts}} Contains nuts {{else}} No nuts {{/if}}
+    </div> --}}
+    {{/each}}
+    <!-- This is the form for adding a new dish -->
+    <div class="add-post-container">
+        <h2>
+            Add a post to the tech blog!
+        </h2>
+        <form class="new-post-form">
+            <label for="Post_title">
+                Post Title:
+            </label>
+            <br />
+            <textarea id="post_title" name="post_title" rows="2" cols="30">
+        {{post_title}}
+    </textarea>
+            <br />
+            <label for="description">
+                Description:
+            </label>
+            <br />
+            <textarea id="description" name="description" rows="5" cols="30">
+      {{description}}
+    </textarea>
+            <br />
+            <label for="user_name">
+                User Name:
+            </label>
+            <br />
+            <textarea id="user_name" name="user_name" rows="2" cols="30">
+      {{user_name}}
+    </textarea>
+            {{!-- <br />
+            <br /> --}}
+            {{!-- {{#if has_nuts}}
+            <input type="checkbox" id="has_nuts" name="has_nuts" checked />
+            {{else}}
+            <input type="checkbox" id="has_nuts" name="has_nuts" />
+            {{/if}}
+            <label for="has_nuts">
+                Check box if this dish contains nuts
+            </label> --}}
+            <br />
+            <button type="submit" value="Submit">
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="/js/add-dish.js"></script>
