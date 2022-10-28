@@ -12,13 +12,13 @@ const seedDatabase = async () => {
         individualHooks: true,
         returning: true,
     });
-
-    await seedComment();
-    console.log("-----COMMENT SEEDED-----")
-
     await postSeed();
     console.log("-----POST SEEDED-----")
 
+
+    await seedComment();
+    console.log("-----COMMENT SEEDED-----")
+    
     process.exit(0);
 };
 
