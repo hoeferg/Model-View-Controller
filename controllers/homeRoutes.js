@@ -6,7 +6,27 @@ const withAuth = require('../utils/auth');
 router.get('/', async (req, res) => {
     try {
         const postData = await Post.findAll({
-            include: [User]
+            attributes: [
+                "id",
+                "title",
+                "content",
+                "created_at"],
+            include: [
+                {
+                    model: Comment,
+                    attributes: [
+                        "id",
+                        "comment_text",
+                        "post_id",
+                        "user_id",
+                        "created_at",
+                    ],
+                    include: {
+                        model: User,
+                        attributes: ["username"],
+                    }
+                }
+            ]
         });
 
         const posts = postData.map((post) => post.get({ plain: true }));
@@ -37,22 +57,29 @@ router.get('/post:id', async (req, res) => {
     try {
         // finds the post info
         const postData = Post.findOne({
+            where: {
+                id: req.params.id,
+            },
             attributes: [
                 "title",
-                "content",
+                "post_content",
                 "id",
+                "user_id",
+                "created_at"
                 // "created_at"
             ],
             include: {
                 model: User,
                 attributes: [
                     "username"
-                ]
-            }
+                ],
+            },
+        },
         })
-        return res.json(postData)
-    } catch (err) {
-        res.status(500).json(err);
+    }  if (!postData) {
+        res.status(404).json({ message: "No post found" });
+
+        return res.json(postData),
     }
 });
 
