@@ -53,35 +53,27 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.get('/post:id', async (req, res) => {
+router.get('/post/:id', async (req, res) => {
     try {
         // finds the post info
-        const postData = Post.findOne({
-            where: {
-                id: req.params.id,
-            },
-            attributes: [
-                "title",
-                "post_content",
-                "id",
-                "user_id",
-                "created_at"
-                // "created_at"
+        const postData = Post.findByPk(req.params.id, {
+            include: [
+                { model: User, attributes: ["username"] },
+                { model: Comment, include: [User] },
             ],
-            include: {
-                model: User,
-                attributes: [
-                    "username"
-                ],
-            },
-        },
         })
-    }  if (!postData) {
-        res.status(404).json({ message: "No post found" });
-
-        return res.json(postData),
+        const post = postData.get({ plain: true});
+        res.render("post", { ...post, logged_in: req.session.logged_in });
+} catch (err) {
+        res.status(500).json(err);
     }
 });
+
+router.get("/create-post", async (req, res) => {
+    try {
+        const userData
+    }
+})
 
 router.get('/post-comment', async (req, res) => {
     try {
