@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, Post, Comment } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 router.get('/', async (req, res) => {
     try {
@@ -111,7 +112,7 @@ router.put('/:id', async (req, res) => {
                 id: req.params.id,
             }
         })
-        if (! commentData) {
+        if (! postData) {
             res.status(404).json({message: "No post found"})
         }
         return res.json(postData)
