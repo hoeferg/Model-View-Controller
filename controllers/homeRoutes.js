@@ -64,24 +64,27 @@ router.get('/post/:id', async (req, res) => {
         })
         const post = postData.get({ plain: true});
         res.render("post", { ...post, logged_in: req.session.logged_in });
+        if (! postData) {
+            res.status(404).json({message: "No post found"})
+        }
 } catch (err) {
         res.status(500).json(err);
     }
 });
 
-router.get("/create-post", async (req, res) => {
-    try {
-        const userData
-    }
-})
 
 router.get('/post-comment', async (req, res) => {
     try {
         const commentData = await Post.findOne({
+            where: {
+                id: req.params.id,
+            },
             attributes: [
                 "title",
                 "content",
                 "id",
+                "user_id",
+                "created_at"
                 // "created_at"
             ],
             include: {
@@ -89,12 +92,20 @@ router.get('/post-comment', async (req, res) => {
                 attributes: [
                     "username"
                 ]
-            }
+            },
+            model: User,
+            attributes: ["username"]
         })
-        return res.json(commentData)
+        const post = commentData.get({ plain: true});
+        res.render("post", { ...post, logged_in: req.session.logged_in });
+        if (! commentData) {
+            res.status(404).json({message: "No comment found"})
+        }
     } catch (err) {
-        res.status(500).json(err);
-    }
-});
+            res.status(500).json(err);
+        }
+    });
+
+
 
 module.exports = router; 
