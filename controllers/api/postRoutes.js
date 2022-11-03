@@ -101,23 +101,23 @@ router.get('/', async (req, res) => {
 //     }
 // });
 
-router.delete('/:id', withAuth async (req, res) => {
-    try {
-        const postData = await Post.destroy(
-            {
-                where: {
-                    id: req.params.id
-                }
-            },
+// router.delete('/:id', withAuth async (req, res) => {
+//     try {
+//         const postData = await Post.destroy(
+//             {
+//                 where: {
+//                     id: req.params.id
+//                 }
+//             },
 
-                if (!postData) {
-            res.status(404).json({ message: "No post found" })
-        }
-        return res.json(postData)
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
+//                 if (!postData) {
+//             res.status(404).json({ message: "No post found" })
+//         }
+//         return res.json(postData)
+//     } catch (err) {
+//         res.status(500).json(err);
+//     }
+// });
 
 
 module.exports = router;
