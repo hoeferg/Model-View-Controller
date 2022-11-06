@@ -1,74 +1,54 @@
-{{!-- WHEN I choose to sign up
-THEN I am prompted to create a username and password
-WHEN I click on the sign-up button --}}
-<div class="post-container">
-    <div class="card-header col-md-12 text-center">
-        <h2>
-            Newest Post
-        </h2>
-    </div>
-    {{#each post as |post|}}
-    <div class="post col-md-4">
-        <p>
-            {{post.id}}.
-            {{post.post_title}}
-        </p>
-    </div>
-    <div class="col-md-5">
-        <p>
-            User:
-            {{post.user_name}}
-        </p>
-    </div>
-    {{!-- <div class="col-md-3">
-        {{#if dish.has_nuts}} Contains nuts {{else}} No nuts {{/if}}
-    </div> --}}
-    {{/each}}
-    <!-- This is the form for adding a new dish -->
-    <div class="add-post-container">
-        <h2>
-            Add a post to the tech blog!
-        </h2>
-        <form class="new-post-form">
-            <label for="Post_title">
-                Post Title:
-            </label>
-            <br />
-            <textarea id="post_title" name="post_title" rows="2" cols="30">
-        {{post_title}}
-    </textarea>
-            <br />
-            <label for="description">
-                Description:
-            </label>
-            <br />
-            <textarea id="description" name="description" rows="5" cols="30">
-      {{description}}
-    </textarea>
-            <br />
-            <label for="user_name">
-                User Name:
-            </label>
-            <br />
-            <textarea id="user_name" name="user_name" rows="2" cols="30">
-      {{user_name}}
-    </textarea>
-            {{!-- <br />
-            <br /> --}}
-            {{!-- {{#if has_nuts}}
-            <input type="checkbox" id="has_nuts" name="has_nuts" checked />
-            {{else}}
-            <input type="checkbox" id="has_nuts" name="has_nuts" />
-            {{/if}}
-            <label for="has_nuts">
-                Check box if this dish contains nuts
-            </label> --}}
-            <br />
-            <button type="submit" value="Submit">
-                Submit
-            </button>
+{{#if logged_in}}
+<div class="post-card">
+    <h2 class="create-post">Create Post</h2>
+    <form class="form post-form">
+        <div class="form-group">
+            <label for="username-post">{{user.username}}</label>
+            <input class="form-input" type="text" id="username" />
+        </div>
+        <div class="form-group">
+            <label for="post-title">Title of Post:</label>
+            <input class="form-input" type="text" id="title" />
+        </div>
+
+        <select name="dropdown">
+            <option value="action">Action</option>
+            <option value="adventure">Adventure</option>
+            <option value="horror">Horror</option>
+            <option value="puzzle">Puzzle</option>
+            <option value="mmo">MMO</option>
+            <option value="rpg">RPG</option>
+            <option value="survival">Survival</option>
+        </select>
+
+        <div class="form-group">
+            <div class="form-group">
+                <label for="post-content">Post Content:</label>
+                <input class="form-input" type="text" id="content" />
+            </div>
+            <button class="" type="submit-post">Post It!</button>
+        </div>
+    </form>
+</div>
+<div class="">
+    <div class="comment-card">
+        <h2 class="comment">Create your comment</h2>
+        <form class="form comment-form">
+            <div class="form-group">
+                <label for="comment">Comment:</label>
+                <input class="form-input" type="comment_text" id="comment-info" />
+            </div>
+            <div class="form-group">
+                <button class="" type="submit">Submit Comment</button>
+            </div>
         </form>
     </div>
 </div>
 
-<script src="/js/add-dish.js"></script>
+{{else}}
+<a href="/login">You must login first to create a post</a>
+{{/if}}
+
+<script src="./js/newPost.js"></script>
+<script src="./js/editPost.js"></script>
+<script src="./js/comment.js"></script>

@@ -1,70 +1,35 @@
-{{!-- GIVEN a CMS-style blog site
-WHEN I visit the site for the first time
-THEN I am presented with the homepage, which includes existing blog posts if any have been posted; navigation links for
-the homepage and the dashboard; and the option to log in --}}
+<main>
 
-{{!-- WHEN I click on the homepage option
-THEN I am taken to the homepage
-WHEN I click on any other links in the navigation
-THEN I am prompted to either sign up or sign in --}}
-<div class="post-card">
-    <div class="post-card-header">
-        {{user_name}}
+    <nav class=" ">
+
+        {{#if logged_in}}
+        <button id="logout" class="logout">Logout</button>
+        <script src="/js/logout.js"></script>
+        {{else}}
+        <button><a href="/login" id="login" class="logout">Login</a></button>
+        {{/if}}
+    </nav>
+
+    <div class=" ">
+        <input id="search-input" type="text" placeholder="Search...">
     </div>
-    <div class="card-body">
-        <p>
-            Description:
-            {{description}}
-        </p>
-        <p>
-            Guest:
-            {{user_name}}
-        {{!-- </p>
-        {{#if loggedIn}}
-        <p class="loggedIn">
-            Contains Nuts
-        </p>
-        {{/if}} --}}
+    <div class="mb-4">
+        {{#if logged_in}}
+        <a href="/create-post" id="create-post" class="">Create Post</a>
+        <script src="/js/newPost.js"></script>
+        {{else}}
+        <a href="/login" class="">Create Post</a>
+        {{/if}}
     </div>
-</div>
-<div class="edit-post-container">
-    <h2>
-        Update Post
-    </h2>
-    <form class="edit-post-form">
-        <label for="post_title">
-            Post Title:
-        </label>
-        <br />
-        <textarea id="post_title" name="post_title" rows="2" cols="30">
-        {{post_title}}
-    </textarea>
-        <br />
-        <label for="description">
-            Description:
-        </label>
-        <br />
-        <textarea id="description" name="description" rows="5" cols="30">
-        {{description}}
-    </textarea>
-        <br />
-        <label for="user_name">
-            User Name:
-        </label>
-        <br />
-        <textarea id="user_name" name="user_name" rows="2" cols="30">
-        {{user_name}}
-    </textarea>
-        <br />
-        <br />
-        <input type="checkbox" id="has_nuts" name="has_nuts" value="true" />
-        <label for="has_nuts">
-            Check box if this dish contains nuts
-        </label>
-        <br />
-        <button type="submit" value="submit">
-            Submit
-        </button>
-    </form>
-</div>
-<script src="/js/edit-dish.js"></script>
+    
+    <div class="post-area">
+        <div class="">
+            <div>
+                {{#each users as |post|}}
+                {{> post-details}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</main>
+</body>
