@@ -1,7 +1,6 @@
 const editPostForm = async event => {
     event.preventDefault();
     const post_title = document.querySelector('input[name="title"]').value.trim();
-    const genre = document.querySelector('input[name="genre"]').value.trim();
     const post_body = document.querySelector('input[name="content"]').value.trim();
 
 
@@ -15,7 +14,7 @@ const editPostForm = async event => {
             post_id,
             post_title,
             post_body,
-            genre,
+            
         }),
         headers: {
             'Content-Type': 'application/json'
@@ -44,7 +43,7 @@ const deletePost = async event => {
             post_id,
             post_title,
             post_body,
-            genre,
+        
         }),
         headers: {
             'Content-Type':
