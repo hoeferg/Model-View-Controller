@@ -1,16 +1,15 @@
 const postForm = async (event) => {
     event.preventDefault();
 
-    const post_title = document.querySelector('input[name = "title"]').value;
-    const post_body = document.querySelector('input[name = "content"]').value;
-
-    const response = await fetch('/api/post', {
+    const title = document.querySelector('#title').value;
+    const post_content = document.querySelector('#content').value;
+console.log(title)
+console.log(post_content)
+    const response = await fetch('/api/posts', {
         method: 'POST',
         body: JSON.stringify({
-            post_id,
-            post_title,
-            post_body,
-            genre,
+            title,
+            post_content
         }),
         headers: {
             'Content-Type': 'application/json',

@@ -6,38 +6,18 @@ const withAuth = require('../utils/auth');
 router.get('/', async (req, res) => {
     try {
         const postData = await Post.findAll({
-            attributes: [
-                "id",
-                "title",
-                "content",
-                "created_at"],
-            include: [
-                {
-                    model: Comment,
-                    attributes: [
-                        "id",
-                        "comment_text",
-                        "post_id",
-                        "user_id",
-                        "created_at",
-                    ],
-                    include: {
-                        model: User,
-                        attributes: ["username"],
-                    }
-                }
-            ]
+            include: [User],
         });
 
         const posts = postData.map((post) => post.get({ plain: true }));
 
         res.render('homepage', {
-            post,
+            posts,
+            logged_in: true,
             // Pass the logged in flag to the template
-            logged_in: req.session.logged_in,
         });
-        console.log(postData)
-        return res.json(posts)
+        console.log(posts)
+        // return res.json(posts)
     } catch (err) {
         res.status(500).json(err);
     }
@@ -62,12 +42,12 @@ router.get('/post/:id', async (req, res) => {
                 { model: Comment, include: [User] },
             ],
         })
-        const post = postData.get({ plain: true});
+        const post = postData.get({ plain: true });
         res.render("post", { ...post, logged_in: req.session.logged_in });
-        if (! postData) {
-            res.status(404).json({message: "No post found"})
+        if (!postData) {
+            res.status(404).json({ message: "No post found" })
         }
-} catch (err) {
+    } catch (err) {
         res.status(500).json(err);
     }
 });
@@ -81,11 +61,10 @@ router.get('/post-comment', async (req, res) => {
             },
             attributes: [
                 "title",
-                "content",
+                "post_content",
                 "id",
                 "user_id",
-                "created_at"
-                // "created_at"
+
             ],
             include: {
                 model: User,
@@ -96,15 +75,20 @@ router.get('/post-comment', async (req, res) => {
             model: User,
             attributes: ["username"]
         })
-        const post = commentData.get({ plain: true});
+        const post = commentData.get({ plain: true });
         res.render("post", { ...post, logged_in: req.session.logged_in });
-        if (! commentData) {
-            res.status(404).json({message: "No comment found"})
+        if (!commentData) {
+            res.status(404).json({ message: "No comment found" })
         }
     } catch (err) {
-            res.status(500).json(err);
-        }
-    });
+        res.status(500).json(err);
+    }
+});
+
+router.get('/create-post', async (req, res) => {
+        res.render("newPost", {logged_in: true})
+});
+
 
 
 

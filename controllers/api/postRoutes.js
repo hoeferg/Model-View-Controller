@@ -3,40 +3,44 @@ const { User, Post, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 router.get('/', async (req, res) => {
-    try {
-        const postData = await Post.findAll({
-            attributes: [
-                "id",
-                "title",
-                "content",
-                "created_at"
-            ],
-            include: [
-                {
+    // try {
+    const postData = await Post.findAll({
+        attributes: [
+            "id",
+            "title",
+            "post_content",
+            // "created_at"
+        ],
+        include: [
+            {
+                model: User,
+                attributes: ['username']
+            },
+            {
+                model: Comment,
+                attributes: [
+                    "id",
+                    "comment_content",
+                    "post_id",
+                    "user_id",
+                    // "created_at",
+                ],
+                include: {
                     model: User,
-                    attributes: ['username']
-                },
-                {
-                    model: Comment,
-                    attributes: [
-                        "id",
-                        "comment_text",
-                        "post_id",
-                        "user_id",
-                        "created_at",
-                    ],
-                    include: {
-                        model: User,
-                        attributes: ['username'],
-                    }
+                    attributes: ['username'],
                 }
-            ]
+            }
+        ]
+    })
+        .then((dbPostData) => {
+            console.log('dbPostData line 36 postRoutes.js', dbPostData)
         })
-        return res.json(postData)
-    } catch (err) {
-        res.status(500).json(err);
-    }
+    //return res.json(postData)
+    // } catch (err) {
+    //     res.status(500).json(err);
+    // }
 });
+
 
 // router.get('/:id', async (req, res) => {
 //     try {
@@ -48,7 +52,7 @@ router.get('/', async (req, res) => {
 //                 "id",
 //                 "title",
 //                 "content",
-//                 "created_at"
+//                 
 //             ],
 //             include: [
 //                 {
@@ -59,7 +63,7 @@ router.get('/', async (req, res) => {
 //                     model: Comment,
 //                     attributes: [
 //                         "id",
-//                         "comment_text",
+//                         "comment_content",
 //                         "post_id",
 //                         "user_id",
 //                         "created_at",
@@ -119,5 +123,20 @@ router.get('/', async (req, res) => {
 //     }
 // });
 
+router.post('/', async (req, res) => {
+    try {
+        console.log(req.body)
+        const postData = await Post.create({
+            title: req.body.title,
+            post_content: req.body.post_content,
+        })
+        if (!postData) {
+            res.status(404).json({ message: "No post found" })
+        }
+        return res.json(postData)
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
 
 module.exports = router;

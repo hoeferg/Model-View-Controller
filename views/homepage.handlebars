@@ -17,18 +17,16 @@
         {{#if logged_in}}
         <a href="/create-post" id="create-post" class="">Create Post</a>
         <script src="/js/newPost.js"></script>
-        {{else}}
-        <a href="/login" class="">Create Post</a>
         {{/if}}
     </div>
     
     <div class="post-area">
         <div class="">
             <div>
-                {{#each users as |post|}}
-                {{> post-details}}
+                {{#each posts as |post|}}
+                {{> postDetails}}
                 {{/each}}
-            </div>
+            </div> 
         </div>
     </div>
 </main>

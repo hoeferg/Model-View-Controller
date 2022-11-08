@@ -44,9 +44,11 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
+        console.log(req.body)
         const postData = await User.create({
             username: req.body.username,
             password: req.body.password,
+            email: req.body.email,
         });
         req.session.user_id = postData.id
         req.session.username =  postData.username;
@@ -60,13 +62,14 @@ router.post('/', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
+        console.log(req.body)
         // Find the user who matches the posted e-mail address
-        const postData = await User.findOne({ where: { email: req.body.email } });
+        const userData = await User.findOne({ where: { username: req.body.username } });
 
-        if (!postData) {
+        if (!userData) {
             res
-                .status(400)
-                .json({ message: 'Incorrect email or password, please try again' });
+                .status(403)
+                .json({ message: 'please try again' });
             return;
         }
 
@@ -75,8 +78,8 @@ router.post('/login', async (req, res) => {
 
         if (!validPassword) {
             res
-                .status(400)
-                .json({ message: 'Incorrect email or password, please try again' });
+                .status(404)
+                .json({ message: 'invalid password' });
             return;
         }
 

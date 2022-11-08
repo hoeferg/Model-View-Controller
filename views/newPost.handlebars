@@ -1,0 +1,29 @@
+{{#if logged_in}}
+<div class="post-card">
+    <h2 class="create-post">Create Post</h2>
+    <form class="form post-form">
+        <div class="form-group">
+            <h2>{{user.username}}</h2>
+            
+        <div class="form-group">
+            <label for="post-title">Title of Post:</label>
+            <input class="form-input" type="text" id="title" />
+        </div>
+
+        <div class="form-group">
+            <div class="form-group">
+                <label for="post-content">Post Content:</label>
+                <input class="form-input" type="text" id="content" />
+            </div>
+            <button class="" type="submit-post" id = "create-post">Post It!</button>
+        </div>
+    </form>
+</div>
+
+{{else}}
+<a href="/login">You must login first to create a post</a>
+{{/if}}
+
+<script src="./js/newPost.js"></script>
+<script src="./js/editPost.js"></script>
+<script src="./js/comment.js"></script>
