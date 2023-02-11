@@ -12,8 +12,6 @@ To run this application please go to the following url and interact with the web
 
 To be able to create a post or comment the user needs to create an account with our website. Create an account by creating a username and a password. Once that information is added and the user logs in, the user is able to interact in the discussions taking place.
 
-![screen shot](assets/images/screenshot.png)
-
 ## Credits
 
 N/A
